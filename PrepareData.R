@@ -94,4 +94,5 @@ data.merged <- merge(data, data.purchases)
 ultimate.purchase <- apply(data.merged[,20:26, with=F] == data.merged[,27:33, with=F],1,all)
 
 data$purchase.choice <- ultimate.purchase
-write.csv(data, file="./data/trainingData.csv")
+##write.csv(data, file="./data/trainingData.csv")
+
