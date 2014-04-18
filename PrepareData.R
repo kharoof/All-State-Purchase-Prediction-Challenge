@@ -30,7 +30,7 @@ data[,car.age:=as.factor(car_age)]
 ##car_value - How valuable was the customer’s car when new
 data[,car.value:=as.factor(car_value)]
 ##risk_factor - An ordinal assessment of how risky the customer is (1, 2, 3, 4)
-data[,risk.factor:=   factor(risk_factor, ordered=T)]
+data[,risk.factor:=   factor(risk_factor)]
 ##age_oldest - Age of the oldest person in customer's group
 data[,age.oldest:=as.factor(age_oldest)]
 ##age_youngest - Age of the youngest person in customer’s group
@@ -53,13 +53,13 @@ data[,duration.previous:=as.numeric(duration_previous)]
 ## G - 1,2,3,4
 ## Formatting the options should ensure no incorrect values and will ensure models fitted use
 ## an appropiate design matrix
-data[,option.a:=factor(A, ordered=T, levels=c(0:2))]
-data[,option.b:=factor(B, ordered=T, levels=c(0:1))]
-data[,option.c:=factor(C, ordered=T, levels=c(1:4))]
-data[,option.d:=factor(D, ordered=T, levels=c(1:3))]
-data[,option.e:=factor(E, ordered=T, levels=c(0:1))]
-data[,option.f:=factor(F, ordered=T, levels=c(0:3))]
-data[,option.g:=factor(G, ordered=T, levels=c(1:4))]
+data[,option.a:=factor(A,  levels=c(0:2))]
+data[,option.b:=factor(B,  levels=c(0:1))]
+data[,option.c:=factor(C,  levels=c(1:4))]
+data[,option.d:=factor(D,  levels=c(1:3))]
+data[,option.e:=factor(E,  levels=c(0:1))]
+data[,option.f:=factor(F,  levels=c(0:3))]
+data[,option.g:=factor(G,  levels=c(1:4))]
 
 ##Only keep the key fields
 key.fields <- c(
@@ -91,8 +91,9 @@ setkey(data.purchases, customer)
 ##Merge the answer with each transaction
 data.merged <- merge(data, data.purchases)
 ##Test if the transaction is the ultimate purchase
-ultimate.purchase <- apply(data.merged[,20:26, with=F] == data.merged[,27:33, with=F],1,all)
+ultimate.purchase <- as.factor(as.character(apply(data.merged[,20:26, with=F] == data.merged[,27:33, with=F],1,all)))
 
 data$purchase.choice <- ultimate.purchase
 ##write.csv(data, file="./data/trainingData.csv")
+
 
